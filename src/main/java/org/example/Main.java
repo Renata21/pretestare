@@ -2,6 +2,7 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-      Connect.connect();
+        Frame f = new Frame();
+        f.setVisible(true);
     }
 }
