@@ -10,10 +10,10 @@ import static org.example.DBDataAgenti.getAgents;
 public class AddEditApartamentDialog {
     static JSpinner etaj = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
     static JSpinner nrCamere = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
-    static JTextField pret = new JTextField(10);
+    static JTextField pret = new JTextField("100", 10);
     static  JSpinner metri = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
 
-    static JComboBox<String> agent = new JComboBox<>();
+    static JTextField agent = new JTextField("1", 10);
 
     public static String[] showAddEditInputDialog(Component parentComponent, String option, String[] initial_data) {
         JPanel principalPanel = new JPanel(new GridLayout(4, 1, 20, 0));
@@ -36,24 +36,15 @@ public class AddEditApartamentDialog {
 
         JPanel agentPanel = new JPanel(new FlowLayout());
         agentPanel.add(new JLabel("Agent: "));
-
-        ResultSet rs = getAgents();
-        try {
-            while (rs.next()) {
-                agent.addItem(rs.getString(2));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
         agentPanel.add(agent);
 
 
-        if (initial_data.length == 4) {
+        if (initial_data.length == 5) {
             etaj.setValue(Integer.valueOf(initial_data[0]));
             nrCamere.setValue(Integer.valueOf(initial_data[1]));
             pret.setText(initial_data[2]);
             metri.setValue(Integer.valueOf(initial_data[3]));
+            agent.setText(initial_data[3]);
         }
 
         principalPanel.add(etajPanel);
@@ -71,7 +62,7 @@ public class AddEditApartamentDialog {
             input[1] = String.valueOf(nrCamere.getValue());
             input[2] = pret.getText();
             input[3] = String.valueOf(metri.getValue());
-            input[4] = String.valueOf(agent.getSelectedItem());
+            input[4] = agent.getText();
 
         } else input = null;
 

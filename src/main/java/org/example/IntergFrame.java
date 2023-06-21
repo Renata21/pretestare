@@ -1,2 +1,4 @@
-package org.example;public class IntergFrame {
+package org.example;
+
+public class IntergFrame {
 }

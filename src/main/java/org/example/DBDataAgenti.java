@@ -13,7 +13,7 @@ public class DBDataAgenti {
     public static void loadDataAgent(JTable tabel) {
         try (Connection con = Connect.connect()){
             Statement st = con.createStatement();
-            ResultSet response = st.executeQuery("select * from Agent order by id");
+            ResultSet response = st.executeQuery("select * from Agent order by CodAgent");
 
             tableModel.setRowCount(0);
 
@@ -51,7 +51,7 @@ public class DBDataAgenti {
         }
     }
 
-    public static void updateAgent(String nume, String prenume, Integer varsta, String telefon, String cod) {
+    public static void updateAgent(String nume, String prenume, Integer varsta, String telefon, Integer cod) {
         try(Connection con = Connect.connect()) {
             String sql = "update Agent set nume = ?, prenume =?, varsta=?, telefon=? where CodAgent=?";
             PreparedStatement st = con.prepareStatement(sql);
@@ -59,7 +59,7 @@ public class DBDataAgenti {
             st.setString(2, prenume);
             st.setInt(3, varsta);
             st.setString(4, telefon);
-            st.setString(5, cod);
+            st.setInt(5, cod);
 
             st.execute();
             st.close();
@@ -70,10 +70,11 @@ public class DBDataAgenti {
 
     public static ResultSet getAgents(){
         try(Connection con = Connect.connect()) {
-            String sql = "select CodAgent, nume from Agent";
+            String sql = "select * from Agent";
             PreparedStatement st = con.prepareStatement(sql);
-
-            return st.executeQuery();
+            ResultSet x = st.executeQuery();
+            st.close();
+            return x;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
